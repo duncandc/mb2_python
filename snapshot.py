@@ -32,13 +32,6 @@ def snapPath(basePath, snapNum, chunkNum=None):
 def snapHeader(basePath, snapNum, chunkNum=None):
     """
     Return snapshot header
-
-    Notes
-    -----
-    The Gadget snapshot files for MBII use a custom block ordering.
-    This block ordering is defined in ``mb2_python.data.py``.
-    In order to use the pygadgetreader module,
-    the block ordering attribute of the header object is replaced.
     """
 
     if chunkNum is None:
@@ -65,12 +58,33 @@ def getNumPart(header):
 def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, **kwargs):
     """
     Load a subset of fields for all particles/cells of a given partType.
+
+    Parameters
+    ----------
+    basePath : string
+
+    snapNum : int
+
+    partType : int
+
+    fields : list, optional
+
+    chunkNum : int, optional
+
+    Returns
+    -------
+
+    Notes
+    -----
+    The Gadget snapshot files for MBII use a custom block ordering.
+    This block ordering is defined in ``mb2_python.data.py``.
+    In order to use the pygadgetreader module,
+    the block ordering attribute of the header object is replaced
+    within this function.
     """
     snap = snapPath(basePath, snapNum, chunkNum=chunkNum)
     h = pyg_header.Header(snap, 0, kwargs)
     h.BLOCKORDER = BLOCKORDERING['CMU']
-
-    print(h.fileType)
 
     d, p = pollOptions(h, kwargs, fields, partType)
     h.reading = d
