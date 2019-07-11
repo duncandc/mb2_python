@@ -12,8 +12,8 @@ def snapPath(basePath, snapNum, chunkNum=0):
     """
     snapPath = basePath + '/snapdir'
     snapPath += '/snapdir_' + str(snapNum).zfill(3) + '/'
-    filePath = snapPath + 'snap_' + str(snapNum).zfill(3)
-    #filePath += '.' + str(chunkNum)
+    filePath = snapPath + 'snapshot_' + str(snapNum).zfill(3)
+    filePath += '.' + str(chunkNum)
     return filePath
 
 
