@@ -66,9 +66,11 @@ def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, **kwargs):
     """
     Load a subset of fields for all particles/cells of a given partType.
     """
-    snap = snapPath(basePath, snapNum, chunkNum=None)
+    snap = snapPath(basePath, snapNum, chunkNum=chunkNum)
     h = pyg_header.Header(snap, 0, kwargs)
     h.BLOCKORDER = BLOCKORDERING['CMU']
+
+    print(h.fileType)
 
     d, p = pollOptions(h, kwargs, fields, partType)
     h.reading = d
@@ -76,7 +78,13 @@ def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, **kwargs):
     f = h.f
     initUnits(h)
 
-    for i in range(0, h.nfiles):
+    if chunkNum is None:
+        min_chunk = 0
+        max_chunk = h.nfiles
+    else:
+        min_chunk = int(chunkNum)
+        max_chunk = min_chunk+1
+    for i in range(min_chunk, max_chunk):
         if i > 0:
             h = pyg_header.Header(snap, i, kwargs)
             f = h.f
@@ -89,7 +97,7 @@ def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, **kwargs):
             print('no %s particles present!' % pNames[p])
             sys.exit()
 
-        elif h.fileType == 'gadget1':
+        if h.fileType == 'gadget1':
             arr = gadget1.gadget_read(f, h, p, d)
         elif h.fileType == 'gadget2':
             arr = gadget2.gadget_type2_read(f, h, p)
