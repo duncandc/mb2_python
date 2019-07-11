@@ -5,9 +5,9 @@ File I/O related to the gadget snapshot MBII files
 import sys
 import numpy as np
 import pygadgetreader as pyg
-from pygadgetreader.modules import header as pyg_header
-from pygadgetreader.modules.common import pollOptions, initUnits, gadgetPrinter
-from pygadgetreader.modules import gadget1, gadget2
+from readgadget.modules import header as pyg_header
+from readgadget.modules.common import pollOptions, initUnits, gadgetPrinter
+from readgadget.modules import gadget1, gadget2
 from mb2_python.data import BLOCKORDERING, pNames
 
 

@@ -3,7 +3,7 @@ default data access information
 """
 
 from collections import OrderedDict
-from pygadgetreader.readgadget import BLOCKORDERING
+from readgadget.modules.gadget_blockordering import BLOCKORDERING
 
 basePath_default = '/physics/yfeng1/mb2'
 
