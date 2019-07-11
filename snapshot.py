@@ -5,6 +5,8 @@ File I/O related to the snapshot files.
 import numpy as np
 import pygadgetreader
 
+__all__=['snapPath', 'snapHeader', 'getNumPart']
+
 
 def snapPath(basePath, snapNum, chunkNum=0):
     """ 
@@ -26,7 +28,7 @@ def snapHeader(basePath, snapNum, chunkNum=0):
 
 def getNumPart(header):
     """ 
-    Calculate number of particles of ***all types*** given a snapshot header. 
+    Calculate number of particles of all types given a snapshot header. 
     """
     nTypes = 6
 
