@@ -21,18 +21,18 @@ def snapHeader(basePath, snapNum, chunkNum=0):
 	"""
 	Return snapshot header
 	"""
-	return pygadgetreader.readheader(snapPath(basePath, snapNum), 'header', debug=1)
+	return pygadgetreader.readheader(snapPath(basePath, snapNum, chunkNum), 'header')
 
 
 def getNumPart(header):
     """ 
-    Calculate number of particles of all types given a snapshot header. 
+    Calculate number of particles of ***all types*** given a snapshot header. 
     """
     nTypes = 6
 
     nPart = np.zeros(nTypes, dtype=np.int64)
     for j in range(nTypes):
-        nPart[j] = header['NumPart_Total'][j] | (header['NumPart_Total_HighWord'][j] << 32)
+        nPart[j] = header['npartTotal'][j]
 
     return nPart
 
