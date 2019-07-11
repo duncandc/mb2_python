@@ -46,7 +46,6 @@ def snapHeader(basePath, snapNum, chunkNum=None):
 
     fname = snapPath(basePath, snapNum, chunkNum)
     header = pyg.readheader(fname, 'header')
-    header.BLOCKORDER = BLOCKORDERING['CMU']
     return header
 
 
@@ -68,7 +67,7 @@ def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, **kwargs):
     Load a subset of fields for all particles/cells of a given partType.
     """
     snap = snapPath(basePath, snapNum, chunkNum=None)
-    h = pyg_header.Header(snap, 0)
+    h = pyg_header.Header(snap, 0, kwargs)
     h.BLOCKORDER = BLOCKORDERING['CMU']
 
     d, p = pollOptions(h, kwargs, fields, partType)
