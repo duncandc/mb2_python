@@ -13,7 +13,7 @@ def snapPath(basePath, snapNum, chunkNum=0):
     snapPath = basePath + '/snapdir'
     snapPath += '/snapdir_' + str(snapNum).zfill(3) + '/'
     filePath = snapPath + 'snap_' + str(snapNum).zfill(3)
-    filePath += '.' + str(chunkNum)
+    #filePath += '.' + str(chunkNum)
     return filePath
 
 
@@ -21,7 +21,7 @@ def snapHeader(basePath, snapNum, chunkNum=0):
 	"""
 	Return snapshot header
 	"""
-	return pygadgetreader.readheader(snapPath(basePath, snapNum), 'header')
+	return pygadgetreader.readheader(snapPath(basePath, snapNum), 'header', debug=1)
 
 
 def getNumPart(header):
