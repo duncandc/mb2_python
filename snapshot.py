@@ -21,7 +21,7 @@ def snapHeader(basePath, snapNum, chunkNum=0):
 	"""
 	Return snapshot header
 	"""
-	return pygadgetreader.readheader(snapPath(basePath, snapNum))
+	return pygadgetreader.readheader(snapPath(basePath, snapNum), 'header')
 
 
 def getNumPart(header):
