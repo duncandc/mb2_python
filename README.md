@@ -71,42 +71,52 @@ basePath
 │   │   snapshot_001.0
 │   │   snapshot_001.1
 │   │   ...
-│
+│   │
 │   └───snapdir_002
-│   │   snapshot_001.0
-│   │   snapshot_001.1
+│   │   snapshot_002.0
+│   │   snapshot_002.1
 │   │   ...
-│
-└───...
+│   │
+│   └───...
 │
 └───subhalos
 │   └───0
 │   │   └───0
-│   │   |   id.raw
-│   │   |   pos.raw
-│   │   |   ...
+│   │   │   id.raw
+│   │   │   pos.raw
+│   │   │   ...
+│   │   │
 │   │   └───1
-│   │   |   id.raw
-│   │   |   pos.raw
-│   │   |   ...
+│   │   │   id.raw
+│   │   │   pos.raw
+│   │   │   ...
+│   │   │
 │   │   └───2
-│   │   |   id.raw
-│   │   |   pos.raw
-│   │   |   ...
+│   │   │   id.raw
+│   │   │   pos.raw
+│   │   │   ...
+│   │   │
 │   │   └───3
-│   │   |   id.raw
-│   │   |   pos.raw
-│   │   |   ...
+│   │   │   id.raw
+│   │   │   pos.raw
+│   │   │   ...
+│   │   │
 │   │   └───4
-│   │   |   id.raw
-│   │   |   pos.raw
-│   │   |   ...
+│   │   │   id.raw
+│   │   │   pos.raw
+│   │   │   ...
+│   │   │
 │   │   └───5
-│   │   |   id.raw
-│   │   |   pos.raw
-│   │   |   ...
+│   │   │   id.raw
+│   │   │   pos.raw
+│   │   │   ...
+│   │   │
 │   └───1
+│   │   └───...
+│   │ 
 │   └───...
+│
+│
 ```	
 
 contact:
