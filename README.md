@@ -1,14 +1,27 @@
 # MassiveBlack-II Python
 
-This package contains functions to aid in calculations with [MassiveBlack-II](https://arxiv.org/abs/1402.0888) data products.
+This package contains functions to aid in calculations with [MassiveBlack-II](https://arxiv.org/abs/1402.0888) data products.  
+
+Inspired by the [illustris_python](https://bitbucket.org/illustris/illustris_python/src/default/) package, This repo represents my effort to collect, organize, and tidy-up the work of many different researchers who have created and used MBII data products.  An incomplete list includes:
+
+* [Yu Feng](http://rainwoodman.github.io/website/)
+* Ananth Tennetti
+* Aklant Bhowmick
+* Hung-Jin Huang
+* Simon Samuroff
+* Francois Lanusse
+
+To the best of my ability, I have tried to give credit within the code for the work of others.
 
 
 ## Description
 
 This package contains functions that load:
 
+* raw particle data
 * group particle data
 * subhalo particle data
+* subhalo object catalog
 
 
 ## Requirements
@@ -16,7 +29,6 @@ This package contains functions that load:
 In order to use the functions in this package, you will need the following Python packages installed:
 
 * [numpy](http://www.numpy.org)
-* [astropy](http://www.astropy.org)
 * [pygadgetreader](https://bitbucket.org/rthompson/pygadgetreader/src/default/)
 
 
@@ -31,18 +43,25 @@ from mb2_python import load_subhalo
 
 ## Data
 
+MBII data products are stored on the [Coma](http://coma.pbworks.com) cluster at Carnegie Mellon University.  The Coma cluster is only accessible to researchers in the [McWilliams Center](https://www.cmu.edu/cosmology/) at CMU.
+  
+
 ### Snapshots
 
-The raw MBII data was written to disk at 85 points throughout its evolution.  These points in its evolution are referred to as "snapshots", while an individual snapshot is indexed using a snap number, i.e. snapNum.  For each of these 85 snapshots, the data was split into 1024 chunks to make the size of each file more managable.  These chunks are indexed using a chunk number, i.e. chunkNum.  The files are saved in the Gadget-2 binary format.  Snapshot filenames have the form: `snapshot_[snapNum].[chunkNum]`.
+The raw MBII data was written to disk at 85 points throughout its evolution.  These points in its evolution are referred to as "snapshots".  An individual snapshot is indexed using `[snapNum]`.  
+
+For each of these 85 snapshots, the data was split into 1024 "chunks" to make the size of each file more managable.  These chunks are indexed using `[chunkNum]`.  
+
+The files are saved in the Gadget-1 binary [format](https://wwwmpa.mpa-garching.mpg.de/gadget/users-guide.pdf).  The MBII snapshot filenames have the form: `snapshot_[snapNum].[chunkNum]`.
 
 
 ### Subhaloes
 
 
 
-### Direcotry Structure
+### Directory Structure
 
-This module assumes the MBII data is stored in a particular directory heirarchy. This heirarchy is reproduced below.
+This module assumes the MBII data is stored in a particular directory heirarchy. 
 
 
 ```
@@ -89,3 +108,6 @@ basePath
 │   └───1
 │   └───...
 ```	
+
+contact:
+duncanc@andrew.cmu.edu
