@@ -1,8 +1,8 @@
 # MassiveBlack-II Python
 
-This package contains functions to aid in calculations with [MassiveBlack-II](https://arxiv.org/abs/1402.0888) data products.  
+This package contains functions to aid in calculations with [MassiveBlack-II](https://arxiv.org/abs/1402.0888) simulation data products.  
 
-Inspired by the [illustris_python](https://bitbucket.org/illustris/illustris_python/src/default/) package, This repo represents my effort to collect, organize, and tidy-up the work of many different researchers who have created and used MBII data products.  An incomplete list includes:
+Inspired by the [illustris_python](https://bitbucket.org/illustris/illustris_python/src/default/) package, this repository represents my effort to collect, organize, and tidy-up the work of many different researchers who have created and used MBII data products.  An incomplete list includes:
 
 * [Yu Feng](http://rainwoodman.github.io/website/)
 * Ananth Tennetti
