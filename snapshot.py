@@ -3,6 +3,7 @@ File I/O related to the gadget snapshot MBII files
 """
 
 import sys
+import os
 import numpy as np
 import pygadgetreader as pyg
 from readgadget.modules import header as pyg_header
@@ -57,7 +58,7 @@ def getNumPart(header):
 
 def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, **kwargs):
     """
-    Load a subset of fields for all particles/cells of a given partType.
+    Load a subset of fields for all particles/cells of a given particle type
 
     Parameters
     ----------
@@ -82,6 +83,16 @@ def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, **kwargs):
     the block ordering attribute of the header object is replaced
     within this function.
     """
+
+    # check to see if requested file exists
+    if not os.path.isdir(basePath):
+        msg = ('`basePath` does not point to directory on this machine!')
+        raise ValueError(msg)
+    if not os.path.exists(snapPath(basePath, snapNum, chunkNum)):
+        msg = ('snapshot file not found: {0}'.format(snapPath(basePath, snapNum, chunkNum)))
+        raise ValueError(msg)
+
+    # load header information
     snap = snapPath(basePath, snapNum, chunkNum=chunkNum)
     h = pyg_header.Header(snap, 0, kwargs)
     h.BLOCKORDER = BLOCKORDERING['CMU']
@@ -101,6 +112,7 @@ def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, **kwargs):
     for i in range(min_chunk, max_chunk):
         if i > 0:
             h = pyg_header.Header(snap, i, kwargs)
+            h.BLOCKORDER = BLOCKORDERING['CMU']
             f = h.f
             h.reading = d
             initUnits(h)
