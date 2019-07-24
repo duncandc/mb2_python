@@ -29,7 +29,7 @@ srun -p physics --time=02:00:00 --ntasks-per-node 2 --pty bash
 When this job executes, you will be logged onto some node which will be noted in your command prompt.  At this point, you may want to source your bash startup script, e.g. `source ~/.bash_profile`.  You can access a bunch of useful bash commands by executing the following command: 
 
 ```
-source [PATH_TO_MB2_PYTHON]/mb2_remote_bash_functions.sh
+source [PATH_TO_MB2_PYTHON]/notebooks/mb2_remote_bash_functions.sh
 ```
  
 You can create a conda environment by executing the following commands:
@@ -39,13 +39,19 @@ conda create conda-env
 source activate conda-env
 ```
 
-Using one of the commands in `/mb2_remote_bash_functions.sh`, you can start a Jupyter notebook:
+If you want to run the notebooks in this directory, navigate to this directory.
+
+```
+cd ~/[PATH_TO_MB2_PYTHON]/notebooks
+```
+
+Using one of the commands sourced earlier you can start a Jupyter notebook:
 
 ```
 jpt 8888
 ```
 
-Note that `8888` here is the port you have selected.
+Note that `8888` here is the port you have selected.  You can change this if desired.
 
 
 ### On Your Local Machine
@@ -53,7 +59,7 @@ Note that `8888` here is the port you have selected.
 You will also need `mb2_python` installed on your local machine, again noting the installation directoy, `[PATH_TO_MB2_PYTHON]`.  You should modify the username variable in the `credentials.sh` file in this directory to your username for the Coma Cluster.  Now, on your local machine you can access some bash functions by executing the following command: 
 
 ```
-source [PATH_TO_MB2_PYTHON]/mb2_local_bash_functions.sh
+source [PATH_TO_MB2_PYTHON]/notebooks/mb2_local_bash_functions.sh
 ```
 
 
