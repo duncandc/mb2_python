@@ -1,0 +1,18 @@
+#!/bin/bash
+#SBATCH --nodes 1
+#SBATCH --cpus-per-task 4
+#SBATCH --time 02:00:00
+#SBATCH --job-name jupyter-notebook
+#SBATCH -o /home/duncanc/Code/mb2_python/notebook/jupyter_log/jupyter-notebook-%J.log
+#SBATCH -e /home/duncanc/Code/mb2_python/notebook/jupyter_log/jupyter-notebook-%J.log
+
+# get tunneling info
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+source $DIR/credentials.sh
+
+node=$(hostname -s)
+user=$(whoami)
+
+# run jupyter notebook
+jupyter-notebook --no-browser --port=${Port} --ip=${node}
