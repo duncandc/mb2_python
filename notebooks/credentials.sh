@@ -1,4 +1,4 @@
 #!/bin/bash
 
-UserName="[YOUR_USERNAME]"
+UserName="duncanc"
 HostName="coma.hpc1.cs.cmu.edu"

@@ -12,12 +12,12 @@ Here we provide a set of instructions and tools to run Jupyter notebooks remotel
 
 ### On Coma
 
-First, you will need the `mb2_python` module installed on Coma.  One way to accomplkish this is to simply clone the `mb2_python` repo in your home directoy on Coma.  Regardless, note the locaion of your `mb2_python` installation, `[PATH_TO_MB2_PYTHON]`.
+First, you will need the `mb2_python` module installed on Coma.  One way to accomplkish this is to simply clone the `mb2_python` repo in your home directory on Coma.  Regardless, note the locaion of your `mb2_python` installation, `[PATH_TO_MB2_PYTHON]`.
 
-In order to prevent your session timing out you can use the `tmux` program:
+In order to prevent your session timing out you can use the `screen` program:
 
 ```
-tmux new -s jupyter
+screen -S jupyter
 ```
 
 You can submit a job using the slurm `srun` command.  As an example, here I ask for 2 hours, running on two CPUs, using the `physics` queue.  Note that you can/should customize this to your needs and the resources to which you have access.  
@@ -56,7 +56,7 @@ Note that `8888` here is the port you have selected.  You can change this if des
 
 ### On Your Local Machine
 
-You will also need `mb2_python` installed on your local machine, again noting the installation directoy, `[PATH_TO_MB2_PYTHON]`.  You should modify the username variable in the `credentials.sh` file in this directory to your username for the Coma Cluster.  Now, on your local machine you can access some bash functions by executing the following command: 
+You will also need `mb2_python` installed on your local machine, again noting the installation directory, `[PATH_TO_MB2_PYTHON]`.  You should modify the username variable in the `credentials.sh` file in this directory to your username for the Coma Cluster.  Now, on your local machine you can access some bash functions by executing the following command: 
 
 ```
 source [PATH_TO_MB2_PYTHON]/notebooks/mb2_local_bash_functions.sh
