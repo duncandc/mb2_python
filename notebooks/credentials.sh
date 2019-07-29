@@ -1,6 +1,5 @@
 #!/bin/bash
 
-UserName="duncanc"
 HostName="coma.hpc1.cs.cmu.edu"
-JupyterPass="4sNevQucV!ZLhJe*brEW"
-NotebookPort=8999
+UserName="duncanc"  # set to your username on the Coma cluster, probably your CMU netID
+NotebookPort=8999  # should match the c.NotebookApp.port variable in ~/.jupyter/jupyter_notebook_config.py on the remote machine

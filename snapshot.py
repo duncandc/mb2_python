@@ -56,7 +56,7 @@ def getNumPart(header):
     return nPart
 
 
-def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, **kwargs):
+def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, sq=True, **kwargs):
     """
     Load a subset of fields for all particles/cells of a given particle type
 
@@ -74,6 +74,8 @@ def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, **kwargs):
 
     Returns
     -------
+    dict : dictionary
+        dictionary storing requested fields
 
     Notes
     -----
@@ -103,12 +105,22 @@ def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, **kwargs):
     f = h.f
     initUnits(h)
 
+    # intialize dictionary to store results
+    return_dict = {}
+    for key in keys:
+        if key in h.BLOCKORDER.keys():
+            return_dict[key] = None
+        else:
+            msg = ('key: {0}, not available.'.format(key))
+            raise ValueError(msg)
+    
     if chunkNum is None:
         min_chunk = 0
         max_chunk = h.nfiles
     else:
         min_chunk = int(chunkNum)
         max_chunk = min_chunk+1
+    
     for i in range(min_chunk, max_chunk):
         if i > 0:
             h = pyg_header.Header(snap, i, kwargs)
@@ -128,28 +140,16 @@ def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, **kwargs):
         elif h.fileType == 'gadget2':
             arr = gadget2.gadget_type2_read(f, h, p)
 
-        f.close()
+        for field in fields:
+            # put arrays together
+            if return_dict[key] is None:
+                return_dict[key] = arr
+            else:
+                return_dict[key] = np.concatenate((return_dict[key], arr))
 
-        # return nth value
-        if h.nth > 1:
-            arr = arr[0::h.nth]
-
-        # put arrays together
-        if i == 0:
-            return_arr = arr
-            gadgetPrinter(h, d, p)
-            if h.nth > 1 and not h.suppress:
-                print('selecting every %d particles' % h.nth)
-        elif i > 0:
-            if len(arr) > 0:
-                return_arr = np.concatenate((return_arr, arr))
-
-        # if requesting a single file, break out of loop
-        if h.singleFile:
-            break
-
-    if h.double and h.reading != 'pid' and h.reading != 'ParticleIDs':
-        return_arr = return_arr.astype(np.float64)
+    # only a single field--return the array instead of a single item dict
+    if sq and len(fields) == 1:
+        return result[fields[0]]
 
     return return_arr
 
