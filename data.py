@@ -1,5 +1,5 @@
 """
-default data access information
+default data access information for MBII
 """
 
 import numpy as np

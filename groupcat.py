@@ -8,6 +8,7 @@ from mb2_python.data import subdtype, groupdtype
 import numpy as np
 
 __all__=['gcPath', 'shPath']
+__author__=['Duncan Campbell']
 
 
 def gcPath(basePath, snapNum):

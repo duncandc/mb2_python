@@ -1,5 +1,5 @@
 """
-File I/O related to the MBII subhalo particle files
+File I/O related to the MBII (sub-)halo particle files
 """
 
 from __future__ import print_function
@@ -10,6 +10,7 @@ from mb2_python.groupcat import readshc, readgc
 
 
 __all__=['shPath', 'shHeader', 'loadHalo', 'loadSubhalo']
+__author__=['Duncan Campbell', 'Yu Feng']
 
 
 def shPath(basePath, snapNum):
@@ -54,26 +55,46 @@ def shHeader(basePath, snapNum):
     return header_dict
 
 
-def loadSubhalo(basePath, snapNum, id, partType, fields=None):
+def loadSubhalo(basePath, snapNum, partType, field, id=None):
     """
     Load all particles/cells of one type for a specific subhalo
-    (optionally restricted to a subset fields)
+
+    Parameters
+    ----------
+    basePath : string
+        absolute path to mb2 data directory
+
+    snapNum : int
+        snapshot number
+
+    partType : int
+        particle type--must be in the range [0,5]
+
+    field : string
+        particle property name
+
+    id : int, optional
+
+    Returns
+    -------
+    p_arr : pack_array
+        pack_array object storing requested particle data
     """
     
     # check particle type
     partType = int(partType)
-    if partType in '012345':
+    if str(partType) in '012345':
     	pass
     else:
-    	msg = ('type has to be "subhalo" or 0 - 5')
-    	raise KeyError('msg')
+    	msg = ('partType has to be 0 - 5')
+    	raise KeyError(msg)
 
     # check field
     if field in pdtype.names:
         dtype = pdtype[field]
     else:
         msg = ("{0} not available.".format(field))
-        raise ValueError(msh)
+        raise ValueError(msg)
 
     fname = _partType_filename(basePath, snapNum, str(partType), field)
     size = os.path.getsize(fname)
@@ -84,17 +105,45 @@ def loadSubhalo(basePath, snapNum, id, partType, fields=None):
         rt = np.memmap(fname, mode='r', dtype=dtype)
 
     g = readshc(basePath, snapNum)
-    rt = packarray(rt, g['nhalo'] + 1)
+    rt = packarray(rt, g['lenbytype'][:, partType])
 
     return rt
 
 
-def loadHalo(basePath, snapNum, id, partType, fields=None):
-	"""
-	Load all particles/cells of one type for a specific halo
-    (optionally restricted to a subset fields) 
-	"""
-	pass
+def loadHalo(basePath, snapNum, partType, field, id=None):
+    """
+    Load all particles/cells of one type for a specific halo
+    (optionally restricted to a subset fields)
+    """
+	
+	# check particle type
+    partType = int(partType)
+    if str(partType) in '012345':
+    	pass
+    else:
+    	msg = ('partType has to be 0 - 5')
+    	raise KeyError(msg)
+
+    # check field
+    if field in pdtype.names:
+        dtype = pdtype[field]
+    else:
+        msg = ("{0} not available.".format(field))
+        raise ValueError(msg)
+
+    fname = _partType_filename(basePath, snapNum, str(partType), field)
+    size = os.path.getsize(fname)
+
+    if size == 0:
+        rt = np.fromfile(fname, dtype=dtype)
+    else:
+        rt = np.memmap(fname, mode='r', dtype=dtype)
+
+    g = readgc(basePath, snapNum)
+    rt = packarray(rt, g['lenbytype'][:, partType])
+
+    return rt
+
 
 
 def _partType_filename(basePath, snapNum, partType, field):

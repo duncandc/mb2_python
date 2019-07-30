@@ -1,8 +1,11 @@
 """
-utility functions and classes
+utility functions and classes for mb2_python package
 """
 
 import numpy as np
+
+__all__=['packarray']
+__author__=['Yu Feng']
 
 
 class packarray(np.ndarray):
@@ -10,6 +13,10 @@ class packarray(np.ndarray):
     A packarray packs/copies several arrays into the same memory chunk.
     It feels like a list of arrays, but because the memory chunk is continuous,
     arithmatic operations are easier to use(via packarray)
+
+    Notes
+    -----
+    modified by Duncan Campbell in July 2019.
     """
     def __new__(cls, array, start=None, end=None):
         """ 
@@ -29,7 +36,7 @@ class packarray(np.ndarray):
         else:
             self.start = start
             self.end = end
-            self.A = array
+        self.A = array
         return self
 
     @classmethod
