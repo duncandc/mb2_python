@@ -2,9 +2,11 @@
 File I/O related to the gadget snapshot MBII files
 """
 
+from __future__ import print_function, division
 import sys
 import os
 import numpy as np
+import time
 import pygadgetreader as pyg
 from readgadget.modules import header as pyg_header
 from readgadget.modules.common import pollOptions, initUnits, gadgetPrinter
@@ -12,7 +14,7 @@ from readgadget.modules import gadget1, gadget2
 from mb2_python.data import BLOCKORDERING, pNames
 
 
-__all__ = ['snapPath', 'snapHeader', 'getNumPart']
+__all__ = ['snapPath', 'snapHeader', 'getNumPart', 'readSnap']
 __author__ = ['Duncan Campbell']
 
 
@@ -56,21 +58,38 @@ def getNumPart(header):
     return nPart
 
 
-def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, sq=True, **kwargs):
+def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, sq=True, sample_rate=1.0, seed=None, verbose=False, **kwargs):
     """
     Load a subset of fields for all particles/cells of a given particle type
 
     Parameters
     ----------
     basePath : string
+        base path
 
     snapNum : int
+        snapshot number
 
     partType : int
+        particle type
 
     fields : list, optional
+        list of field names (strings)
 
     chunkNum : int, optional
+        chunk number, must be in the range [0,1024]. 
+        If None, all chunks are read. 
+        If a list of legnth 2 is passed, the range is read in
+
+    sq : Boolean, optional
+        If True, return a numpy array instead of a dict if len(fields)==1.
+
+    sample_rate : float, optional
+        random sampling rate, must be in the range (0,1.0].  
+        Note that for sampling purposes, each particle is weighed "evenly".
+
+    seed : int
+        random seed used when sample_rate<1.0
 
     Returns
     -------
@@ -94,20 +113,19 @@ def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, sq=True, *
         msg = ('snapshot file not found: {0}'.format(snapPath(basePath, snapNum, chunkNum)))
         raise ValueError(msg)
 
+    # enforce a reasonable random sampling rate
+    assert (sample_rate<=1.0) & (sample_rate>0.0)
+
     # load header information
     snap = snapPath(basePath, snapNum, chunkNum=chunkNum)
     h = pyg_header.Header(snap, 0, kwargs)
     h.BLOCKORDER = BLOCKORDERING['CMU']
 
-    d, p = pollOptions(h, kwargs, fields, partType)
-    h.reading = d
-
     f = h.f
-    initUnits(h)
 
     # intialize dictionary to store results
     return_dict = {}
-    for key in keys:
+    for key in fields:
         if key in h.BLOCKORDER.keys():
             return_dict[key] = None
         else:
@@ -117,42 +135,91 @@ def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, sq=True, *
     if chunkNum is None:
         min_chunk = 0
         max_chunk = h.nfiles
+    elif isinstance(chunkNum, list):
+        if len != 2:
+            msg = ('chunkNum keyword not valid.'.format(key))
+            raise ValueError(msg)
+        assert chunkNum[0]<chunkNum[1]
     else:
         min_chunk = int(chunkNum)
         max_chunk = min_chunk+1
+
+    f.close()
     
+    if verbose:
+        avg_time_per_chunk = 0.0
+        num_chunks_read = 0
+        start_time = time.time()
+
     for i in range(min_chunk, max_chunk):
-        if i > 0:
+        if verbose:
+            step_start_time = time.time()
+            print("reading in chunk {0} out {1}".format(i+1, max_chunk))
+        for field in fields:
             h = pyg_header.Header(snap, i, kwargs)
             h.BLOCKORDER = BLOCKORDERING['CMU']
             f = h.f
+            d, p = pollOptions(h, kwargs, field, partType)
             h.reading = d
             initUnits(h)
 
-        if h.npartThisFile[p] == 0:
-            if h.nfiles > 1:
-                continue
-            print('no %s particles present!' % pNames[p])
-            sys.exit()
+            if h.fileType == 'gadget1':
+                arr = gadget1.gadget_read(f, h, p, d)
+            elif h.fileType == 'gadget2':
+                arr = gadget2.gadget_type2_read(f, h, p)
 
-        if h.fileType == 'gadget1':
-            arr = gadget1.gadget_read(f, h, p, d)
-        elif h.fileType == 'gadget2':
-            arr = gadget2.gadget_type2_read(f, h, p)
+            if sample_rate < 1.0:
+                n_ptcls = len(arr)
+                mask = down_sample_ptcls(n_ptcls, rate=0.01, seed=seed)
+                arr = arr[mask]
 
-        for field in fields:
             # put arrays together
-            if return_dict[key] is None:
-                return_dict[key] = arr
+            if return_dict[field] is None:
+                return_dict[field] = arr
             else:
-                return_dict[key] = np.concatenate((return_dict[key], arr))
+                return_dict[field] = np.concatenate((return_dict[key], arr))
+
+            if verbose:
+                num_chunks_read += 1
+                time_so_far = time.time() - start_time
+                avg_time_per_chunk = (1.0*time_so_far)/(1.0*num_chunks_read)
+                num_chunks_to_go = (max_chunk - min_chunk) - num_chunks_read
+                print("     time to read chunk: {0} seconds.".format(time.time()-step_start_time))
+                print("     estimated time remaining: {0} minutes".format(avg_time_per_chunk*num_chunks_to_go/60.0))
+
+        f.close()
 
     # only a single field--return the array instead of a single item dict
     if sq and len(fields) == 1:
-        return result[fields[0]]
+        return return_dict[fields[0]]
 
-    return return_arr
+    f.close()
+
+    return return_dict
 
 
+def down_sample_ptcls(n_ptcls, rate=0.01, seed=None):
+    """
+    return a mask array to randomly down-sample
+    
+    Parameters
+    ----------
+    n_ptcls : int
+        number of parrticles
+    
+    rate : float
+        sampling rate--must be in the range [0,1].
+    
+    Returns
+    -------
+    mask : numpy.array
+        boolean array
+    """
+
+    if seed is not None:
+        np.random.seed(seed)
+
+    ran = np.random.random(n_ptcls)
+    return ran<rate
 
 

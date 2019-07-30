@@ -2,6 +2,7 @@
 default data access information
 """
 
+import numpy as np
 from collections import OrderedDict
 from readgadget.modules.gadget_blockordering import BLOCKORDERING
 
@@ -48,3 +49,47 @@ BLOCKORDERING3 = OrderedDict([
     ('bhnprogs', [0, 'flag_cool']),
 ])
 BLOCKORDERING['CMU'] = BLOCKORDERING3
+
+subdtype = np.dtype([
+    ('mass', 'f4'), 
+    ('len', 'i4'), 
+    ('pos', ('f4', 3)),           # potential min pos
+    ('vel', ('f4', 3)),   
+    ('vdisp', 'f4'),  
+    ('vcirc', 'f4'),  
+    ('rcirc', 'f4'),  
+    ('parent', 'i4'),             # parent structure
+    ('massbytype', ('f4', 6)),  
+    ('lenbytype', ('u4',6)), 
+    ('unused', 'u4'),    
+    ('groupid', 'u4'),            # group id
+   ])
+
+groupdtype = np.dtype([
+    ('mass', 'f4'),      
+    ('len', 'i4'), 
+    ('pos', ('f4', 3)),         # 
+    ('vel', ('f4', 3)), 
+    ('nhalo', 'i4'),            # number of subhalos (contamination)
+    ('massbytype', ('f4', 6)),  
+    ('lenbytype', ('u4',6)), 
+   ])
+
+pdtype = np.dtype([
+    ('pos', ('f4', 3)), # position in comoving kpc/h
+    ('vel', ('f4', 3)), # velocity in proper units (NOT in GADGET internal unit)
+    ('mass', 'f4'),     # mass in 1e10 Msun/h
+    ('id', 'u8'),       # unit id of the particle
+    ('type', 'u1'),     # type 0 (gas) 1(dm) 4(star) 5(bh)
+    ('SEDindex', 'i8'),  # to look up stellar band luminosity
+    ('recfrac', 'f4'),   # stellar recycling fraction (ask wilkins)
+    ])
+
+# dtype used for blackhole properties in subhalo/
+bhdtype = numpy.dtype([
+    ('pos', ('f4', 3)),
+    ('vel', ('f4', 3)),
+    ('id', 'u8'),
+    ('bhmass', 'f8'),
+    ('bhmdot', 'f8')])
+
