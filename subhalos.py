@@ -5,6 +5,7 @@ File I/O related to the MBII (sub-)halo particle files
 from __future__ import print_function
 import numpy as np
 import os
+from mb2_python.utils import packarray
 from mb2_python.data import pdtype
 from mb2_python.groupcat import readshc, readgc
 
@@ -55,7 +56,7 @@ def shHeader(basePath, snapNum):
     return header_dict
 
 
-def loadSubhalo(basePath, snapNum, partType, field, id=None):
+def loadSubhalo(basePath, snapNum, partType, field, ids=None):
     """
     Load all particles/cells of one type for a specific subhalo
 
@@ -73,12 +74,13 @@ def loadSubhalo(basePath, snapNum, partType, field, id=None):
     field : string
         particle property name
 
-    id : int, optional
+    ids : array_like, optional
+        array of subhalo IDs
 
     Returns
     -------
     p_arr : pack_array
-        pack_array object storing requested particle data
+        pack_array object storing requested particle data ordered by subhalo
     """
     
     # check particle type
@@ -105,20 +107,46 @@ def loadSubhalo(basePath, snapNum, partType, field, id=None):
         rt = np.memmap(fname, mode='r', dtype=dtype)
 
     g = readshc(basePath, snapNum)
-    rt = packarray(rt, g['lenbytype'][:, partType])
+
+    if ids is None:
+        rt = packarray(rt, g['lenbytype'][:, partType])
+    else:
+    	ids = np.atleast_1d(ids)
+    	rt = packarray(rt, g['lenbytype'][ids, partType])
 
     return rt
 
 
-def loadHalo(basePath, snapNum, partType, field, id=None):
+def loadHalo(basePath, snapNum, partType, field, ids=None):
     """
     Load all particles/cells of one type for a specific halo
-    (optionally restricted to a subset fields)
+
+    Parameters
+    ----------
+    basePath : string
+        absolute path to mb2 data directory
+
+    snapNum : int
+        snapshot number
+
+    partType : int
+        particle type--must be in the range [0,5]
+
+    field : string
+        particle property name
+
+    ids : array_like, optional
+        array of halo IDs
+
+    Returns
+    -------
+    p_arr : pack_array
+        pack_array object storing requested particle data ordered by halo
     """
 	
 	# check particle type
     partType = int(partType)
-    if str(partType) in '012345':
+    if str(partType) in '012345':s
     	pass
     else:
     	msg = ('partType has to be 0 - 5')
@@ -140,7 +168,12 @@ def loadHalo(basePath, snapNum, partType, field, id=None):
         rt = np.memmap(fname, mode='r', dtype=dtype)
 
     g = readgc(basePath, snapNum)
-    rt = packarray(rt, g['lenbytype'][:, partType])
+
+    if ids is None:
+        rt = packarray(rt, g['lenbytype'][:, partType])
+    else:
+    	ids = np.atleast_1d(ids)
+    	rt = packarray(rt, g['lenbytype'][ids, partType])
 
     return rt
 

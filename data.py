@@ -81,7 +81,7 @@ pdtype = np.dtype([
     ('mass', 'f4'),     # mass in 1e10 Msun/h
     ('id', 'u8'),       # unit id of the particle
     ('type', 'u1'),     # type 0 (gas) 1(dm) 4(star) 5(bh)
-    ('SEDindex', 'i8'),  # to look up stellar band luminosity
-    ('recfrac', 'f4'),   # stellar recycling fraction (ask wilkins)
+    ('SEDindex', 'i8'), # to look up stellar band luminosity
+    ('recfrac', 'f4'),  # stellar recycling fraction (ask wilkins)
     ])
 
