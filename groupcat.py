@@ -5,6 +5,7 @@ File I/O related to the MBII (sub-)halo catalogs
 from __future__ import print_function, division
 from mb2_python.utils import packarray
 from mb2_python.data import subdtype, groupdtype
+import numpy as np
 
 __all__=['gcPath', 'shPath']
 

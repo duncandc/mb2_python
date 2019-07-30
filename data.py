@@ -85,11 +85,3 @@ pdtype = np.dtype([
     ('recfrac', 'f4'),   # stellar recycling fraction (ask wilkins)
     ])
 
-# dtype used for blackhole properties in subhalo/
-bhdtype = numpy.dtype([
-    ('pos', ('f4', 3)),
-    ('vel', ('f4', 3)),
-    ('id', 'u8'),
-    ('bhmass', 'f8'),
-    ('bhmdot', 'f8')])
-
