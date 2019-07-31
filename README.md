@@ -50,7 +50,7 @@ In order to use the functions in this package, you will need the following Pytho
 Place this directory in your PYTHONPATH.  The various functions can then be imported as, e.g.:
 
 ```
-from mb2_python import readSubhalo
+from mb2_python import loadSubhalo
 ```
 
 ## Usage <a name="usage"></a>
