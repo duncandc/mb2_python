@@ -18,6 +18,8 @@ To the best of my ability, I have tried to give credit within the code for the w
 
 This package contains functions to load and manipulate both processed object catalogs and the raw particle data associated witht the MassiveBlack-II simulation.
 
+In the parlance of this module, "group" refers to objects identified by an FoF halo finder.  Given this, "group" could be interpreted as "host halo".  On the other hand, "subhalo" refers to objects identified using the subfind algorithm run on particles identified to be parts of groups.  In this sense, these objects match up closely to what is meant by the term <em>subhalo</em> in the halo model.  However, it should be noted that the bulk of material that would gnerally be identified as belonging to the host halo (and not any substructure) is most often identified as belonging to a massive "subhalo".
+
 
 ## Table of Contents
 1. [Requirements](#requirements)
@@ -28,10 +30,11 @@ This package contains functions to load and manipulate both processed object cat
     - [readshc](#readshc)
     - [loadGroup](#loadGroup)
     - [loadSubhalo](#loadSubhalo)
-4. [Data](#data)
-    - [Snapshots]()
-    - [Subhaloes]()
-    - [Directory Structure]()
+4. [Simulation](#simulation)
+5. [Data](#data)
+    - [Snapshots](#snapshots)
+    - [Subhaloes](#subhaloes)
+    - [Directory Structure](#directory_structure)
 
 
 ## Requirements <a name="requirements"></a>
@@ -119,7 +122,6 @@ from mb2_python.data import basePath_default as basePath
 # load DM particle positions and velocities at redshift 0 for subhalo ID=0
 result = loadSubhalo(basePath, 85, 1, fields=['pos','vel'], ids=[0])
 ```
-
 
 
 ## Data <a name="data"></a>
