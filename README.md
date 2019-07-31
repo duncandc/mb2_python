@@ -103,11 +103,11 @@ subhalocat = readshc(basePath, 85)
 This function reads particle data for a given host halo, or for multiple host haloes (ordered by host halo).
 
 ```
-from mb2_python load loadHalo
+from mb2_python load loadGroup
 from mb2_python.data import basePath_default as basePath
 
-# load DM particle positions and velocities at redshift 0 for host halo ID=0
-result = loadHalo(basePath, 85, 1, fields=['pos','vel'], ids=[0])
+# load DM particle positions at redshift 0 for host halo ID=0
+result = loadGroup(basePath, 85, 1, fields='pos', ids=[0])
 ```
 
 
@@ -119,8 +119,8 @@ This function reads particle data for a given subhalo, or for for multiple subha
 from mb2_python load loadSubhalo
 from mb2_python.data import basePath_default as basePath
 
-# load DM particle positions and velocities at redshift 0 for subhalo ID=0
-result = loadSubhalo(basePath, 85, 1, fields=['pos','vel'], ids=[0])
+# load DM particle positions at redshift 0 for subhalo ID=0
+result = loadSubhalo(basePath, 85, 1, fields='pos', ids=[0])
 ```
 
 

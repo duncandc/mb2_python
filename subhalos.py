@@ -10,7 +10,7 @@ from mb2_python.data import pdtype
 from mb2_python.groupcat import readshc, readgc
 
 
-__all__=['shPath', 'shHeader', 'loadHalo', 'loadSubhalo']
+__all__=['shPath', 'shHeader', 'loadGroup', 'loadSubhalo']
 __author__=['Duncan Campbell', 'Yu Feng']
 
 
@@ -117,9 +117,9 @@ def loadSubhalo(basePath, snapNum, partType, field, ids=None):
     return rt
 
 
-def loadHalo(basePath, snapNum, partType, field, ids=None):
+def loadGroup(basePath, snapNum, partType, field, ids=None):
     """
-    Load all particles/cells of one type for a specific halo
+    Load all particles/cells of one type for a specific group
 
     Parameters
     ----------
@@ -141,7 +141,7 @@ def loadHalo(basePath, snapNum, partType, field, ids=None):
     Returns
     -------
     p_arr : pack_array
-        pack_array object storing requested particle data ordered by halo
+        pack_array object storing requested particle data ordered by group
     """
 	
 	# check particle type
