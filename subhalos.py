@@ -146,8 +146,8 @@ def loadHalo(basePath, snapNum, partType, field, ids=None):
 	
 	# check particle type
     partType = int(partType)
-    if str(partType) in '012345':s
-    	pass
+    if str(partType) in '012345':
+        pass
     else:
     	msg = ('partType has to be 0 - 5')
     	raise KeyError(msg)
