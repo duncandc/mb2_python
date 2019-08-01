@@ -13,7 +13,7 @@ basePath_default = '/physics/yfeng1/mb2'
 pNames = {0: 'GAS  ',
           1: 'DM   ',
           4: 'STAR ',
-          5: 'BH'}
+          5: 'BH   '}
 
 """
 Format of block ordering dictionary looks like this:
@@ -24,11 +24,11 @@ entries
 BlockName : string
     must be equal to those in dataTypes value
     (value!!, not key, see below)
-    
+
 ParticleTypes : list
-    list of integers that defines what types of particles 
+    list of integers that defines what types of particles
     have this block.  -1 is used to indicate all particles
-    
+
 FlagsToCheck : string
     which flags (if any) to check that determine if block
     is present
@@ -57,29 +57,29 @@ BLOCKORDERING['CMU'] = BLOCKORDERING3
 
 # subhalo catalog dtypes
 subdtype = np.dtype([
-    ('mass', 'f4'), 
-    ('len', 'i4'), 
+    ('mass', 'f4'),
+    ('len', 'i4'),
     ('pos', ('f4', 3)),           # potential min pos
-    ('vel', ('f4', 3)),   
-    ('vdisp', 'f4'),  
-    ('vcirc', 'f4'),  
-    ('rcirc', 'f4'),  
+    ('vel', ('f4', 3)),
+    ('vdisp', 'f4'),
+    ('vcirc', 'f4'),
+    ('rcirc', 'f4'),
     ('parent', 'i4'),             # parent structure
-    ('massbytype', ('f4', 6)),  
-    ('lenbytype', ('u4',6)), 
-    ('unused', 'u4'),    
+    ('massbytype', ('f4', 6)),
+    ('lenbytype', ('u4',6)),
+    ('unused', 'u4'),
     ('groupid', 'u4'),            # group id
    ])
 
 # group catalog dtypes
 groupdtype = np.dtype([
-    ('mass', 'f4'),      
-    ('len', 'i4'), 
+    ('mass', 'f4'),
+    ('len', 'i4'),
     ('pos', ('f4', 3)),           # potential min pos
-    ('vel', ('f4', 3)), 
+    ('vel', ('f4', 3)),
     ('nhalo', 'i4'),              # number of subhalos (contamination)
-    ('massbytype', ('f4', 6)),  
-    ('lenbytype', ('u4',6)), 
+    ('massbytype', ('f4', 6)),
+    ('lenbytype', ('u4',6)),
    ])
 
 # particle data dtypes for group and subhalo particle data
