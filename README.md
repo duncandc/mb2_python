@@ -65,7 +65,7 @@ There are also some tutorials demonstrating some basic tasks in the [notebooks](
 This function reads particle data from the snapshot files chunk by chunk.  You can read in for all chunks at once, but beware, this is slow.
 
 ```
-from mb2_python load readSnap
+from mb2_python import readSnap
 from mb2_python.data import basePath_default as basePath
 
 # load DM particle positions and velocities at redshift 0 for one data chunk
@@ -77,7 +77,7 @@ result = readSnap(basePath, 85, 1, fields=['pos','vel'], chunkNum=0)
 This function reads the basic group (i.e. host haloes) catalog.
 
 ```
-from mb2_python load readgc
+from mb2_python import readgc
 from mb2_python.data import basePath_default as basePath
 
 # load group catalog for redshift 0
@@ -90,7 +90,7 @@ groupcat = readgc(basePath, 85)
 This function reads the basic subhalo catalog.
 
 ```
-from mb2_python load readshc
+from mb2_python import readshc
 from mb2_python.data import basePath_default as basePath
 
 # load subhalo catalog for redshift 0
@@ -103,7 +103,7 @@ subhalocat = readshc(basePath, 85)
 This function reads particle data for a given host halo, or for multiple host haloes (ordered by host halo).
 
 ```
-from mb2_python load loadGroup
+from mb2_python import loadGroup
 from mb2_python.data import basePath_default as basePath
 
 # load DM particle positions at redshift 0 for host halo ID=0
@@ -116,7 +116,7 @@ result = loadGroup(basePath, 85, 1, field='pos', ids=[0])
 This function reads particle data for a given subhalo, or for for multiple subhaloes (ordered by subhalo).
 
 ```
-from mb2_python load loadSubhalo
+from mb2_python import loadSubhalo
 from mb2_python.data import basePath_default as basePath
 
 # load DM particle positions at redshift 0 for subhalo ID=0
