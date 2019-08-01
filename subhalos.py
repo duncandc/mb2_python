@@ -6,7 +6,7 @@ from __future__ import print_function
 import numpy as np
 import os
 from mb2_python.utils import packarray
-from mb2_python.data import pdtype
+from mb2_python.data import dtype_by_ptype_dict 
 from mb2_python.groupcat import readshc, readgc
 
 
@@ -91,11 +91,13 @@ def loadSubhalo(basePath, snapNum, partType, field, ids=None):
     	msg = ('partType has to be 0 - 5')
     	raise KeyError(msg)
 
+    pdtype = dtype_by_ptype_dict[partType]
+
     # check field
     if field in pdtype.names:
         dtype = pdtype[field]
     else:
-        msg = ("{0} not available.".format(field))
+        msg = ("{0} not available for this particle type.".format(field))
         raise ValueError(msg)
 
     fname = _partType_filename(basePath, snapNum, str(partType), field)
@@ -152,11 +154,13 @@ def loadGroup(basePath, snapNum, partType, field, ids=None):
     	msg = ('partType has to be 0 - 5')
     	raise KeyError(msg)
 
+    pdtype = dtype_by_ptype_dict[partType]
+
     # check field
     if field in pdtype.names:
         dtype = pdtype[field]
     else:
-        msg = ("{0} not available.".format(field))
+        msg = ("{0} not available for this particle type.".format(field))
         raise ValueError(msg)
 
     fname = _partType_filename(basePath, snapNum, str(partType), field)
