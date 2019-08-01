@@ -107,7 +107,7 @@ from mb2_python load loadGroup
 from mb2_python.data import basePath_default as basePath
 
 # load DM particle positions at redshift 0 for host halo ID=0
-result = loadGroup(basePath, 85, 1, fields='pos', ids=[0])
+result = loadGroup(basePath, 85, 1, field='pos', ids=[0])
 ```
 
 
@@ -120,7 +120,7 @@ from mb2_python load loadSubhalo
 from mb2_python.data import basePath_default as basePath
 
 # load DM particle positions at redshift 0 for subhalo ID=0
-result = loadSubhalo(basePath, 85, 1, fields='pos', ids=[0])
+result = loadSubhalo(basePath, 85, 1, field='pos', ids=[0])
 ```
 
 
@@ -160,7 +160,9 @@ print(basePath)
 
 Wthin the `[basePath]` diurectory, the `snapdir` directory stores the raw simulation output.  This data is split into subdirectories by snapshot number, e.g. `snapdir_085` corresponds to the last snapshot of the simulation.
 
-The `subhalos` directory is split into subdirectories by snapshot, e.g. `085` corresponds to the last snapshot of the simulation.  Within each snapshot directory, there are 5 subdirectories, `0`, `1`, `2`, `3`, `4`, `5` corresponding to the particle types.  Within each of these directories are header files and individual files that store particle property arrays, e.g. `pos.raw` contains the particle positions.    
+The `subhalos` directory is split into subdirectories by snapshot, e.g. `085` corresponds to the last snapshot of the simulation.  Within each snapshot directory, there are 5 subdirectories, `0`, `1`, `2`, `3`, `4`, `5` corresponding to the particle types.  Within each of these directories are header files and individual files that store particle property arrays, e.g. `pos.raw` contains the particle positions.  
+
+  
 
 
 ```
