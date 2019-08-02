@@ -1,3 +1,5 @@
+![](./notebooks/simulation_slice.png)
+
 # MassiveBlack-II Python
 
 This package contains functions to aid in calculations with [MassiveBlack-II](https://arxiv.org/abs/1402.0888) simulation data products.  
@@ -18,7 +20,7 @@ To the best of my ability, I have tried to give credit within the code for the w
 
 This package contains functions to load and manipulate both processed object catalogs and the raw particle data associated witht the MassiveBlack-II simulation.
 
-In the parlance of this module, "group" refers to objects identified by an FoF halo finder.  Given this, "group" could be interpreted as "host halo".  On the other hand, "subhalo" refers to objects identified using the subfind algorithm run on particles identified to be parts of groups.  In this sense, these objects match up closely to what is meant by the term <em>subhalo</em> in the halo model.  However, it should be noted that the bulk of material that would gnerally be identified as belonging to the host halo (and not any substructure) is most often identified as belonging to a massive "subhalo".
+In the parlance of this module, "group" refers to objects identified by an FoF halo finder.  Given this, "group" could be interpreted as "host halo".  On the other hand, "subhalo" refers to objects identified using the subfind algorithm run on particles identified to be parts of groups.  In this sense, these objects match up closely to what is meant by the term <em>subhalo</em> in the halo model.  However, it should be noted that the bulk of material that would generally be identified as belonging to the host halo (and not any substructure) is most often identified as belonging to a massive "subhalo".
 
 
 ## Table of Contents
@@ -55,14 +57,14 @@ from mb2_python import loadSubhalo
 
 ## Usage <a name="usage"></a>
 
-Here I give a simple description of the major functions available in this module.  For a more detailed decription the functions, please refer to the associated doc strings.
+Here I give a simple description of the major functions available in this module.  For a more detailed dsecription the functions, please refer to the associated doc strings.
 
 There are also some tutorials demonstrating some basic tasks in the [notebooks](https://github.com/duncandc/mb2_python/tree/master/notebooks) directory.
 
 
 ### readSnap() <a name="readSnap"></a>
 
-This function reads particle data from the snapshot files chunk by chunk.  You can read in for all chunks at once, but beware, this is slow.
+This function reads particle data from the snapshot files chunk by chunk.  You can read in all chunks at once, but beware, this is slow.
 
 ```
 from mb2_python import readSnap
@@ -113,7 +115,7 @@ result = loadGroup(basePath, 85, 1, field='pos', ids=[0])
 
 ### loadSubhalo() <a name="loadSubhalo"></a>
 
-This function reads particle data for a given subhalo, or for for multiple subhaloes (ordered by subhalo).
+This function reads particle data for a given subhalo, or for multiple subhaloes (ordered by subhalo).
 
 ```
 from mb2_python import loadSubhalo
