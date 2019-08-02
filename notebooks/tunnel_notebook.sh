@@ -6,4 +6,4 @@ printf "username: %s \n" $UserName
 printf "remote host: %s \n" $HostName
 printf "port: %s \n" $NotebookPort
 
-ssh -L $NotebookPort:localhost:$NotebookPort -t $UserName@$HostName "jupyter notebook"
+ssh -N -L $NotebookPort:$1:$NotebookPort $UserName@$HostName
