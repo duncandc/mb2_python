@@ -128,7 +128,7 @@ result = loadSubhalo(basePath, 85, 1, field='pos', ids=[0])
 
 ## Data <a name="data"></a>
 
-MBII data products are stored on the [Coma](http://coma.pbworks.com) cluster at Carnegie Mellon University.  The Coma cluster is only accessible to researchers in the [McWilliams Center](https://www.cmu.edu/cosmology/) at CMU.
+MBII data products are currently stored on the [Coma](http://coma.pbworks.com) cluster at Carnegie Mellon University.  The Coma cluster is only accessible to researchers in the [McWilliams Center](https://www.cmu.edu/cosmology/) at CMU.  However, data products can be made available upon request.  
   
 
 ### Snapshots <a name="snapshots"></a>
