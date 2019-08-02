@@ -202,6 +202,8 @@ def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, sq=True,
             else:
                 return_dict[field] = np.concatenate((return_dict[key], arr))
 
+            f.close()
+
         # report progress
         if verbose & progress_bar:
             pbar.update(1.0/num_chunks)
@@ -219,8 +221,6 @@ def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, sq=True,
             t_remain = avg_time_per_chunk*num_chunks_to_go/60.0
             msg = ("\t estimated time remaining: {0} min".format(t_remain))
             print(msg)
-
-        f.close()
 
     # only a single field--return the array instead of a single item dict
     if sq and len(fields) == 1:
