@@ -57,7 +57,7 @@ from mb2_python import loadSubhalo
 
 ## Usage <a name="usage"></a>
 
-Here I give a simple description of the major functions available in this module.  For a more detailed dsecription the functions, please refer to the associated doc strings.
+Here I give a simple description of the major functions available in this module.  For a more detailed description of the functions, please refer to the associated doc strings.
 
 There are also some tutorials demonstrating some basic tasks in the [notebooks](https://github.com/duncandc/mb2_python/tree/master/notebooks) directory.
 
