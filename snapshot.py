@@ -159,7 +159,7 @@ def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, sq=True,
     num_chunks = (max_chunk - min_chunk)
 
     if progress_bar & verbose:
-        pbar = tqdm(total=100)
+        pbar = tqdm(total=num_chunks)
     elif verbose:
         start = time.time()
         num_chunks_read = 0
@@ -206,7 +206,7 @@ def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, sq=True,
 
         # report progress
         if verbose & progress_bar:
-            pbar.update(1.0/num_chunks)
+            pbar.update(1.0)
         elif verbose:
             num_chunks_read += 1
 
