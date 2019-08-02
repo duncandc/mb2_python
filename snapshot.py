@@ -206,7 +206,7 @@ def readSnap(basePath, snapNum, partType, fields=None, chunkNum=None, sq=True,
 
         # report progress
         if verbose & progress_bar:
-            pbar.update(1.0)
+            pbar.update(1)
         elif verbose:
             num_chunks_read += 1
 
