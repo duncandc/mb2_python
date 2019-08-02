@@ -7,7 +7,7 @@ from collections import OrderedDict
 from readgadget.modules.gadget_blockordering import BLOCKORDERING
 
 # location of MBII data on the Coma Cluster
-basePath_default = '/physics/yfeng1/mb2'
+basePath_default = '/physics2/old-warp-physics/yfeng1/mb2'
 
 # particle types/names dictionary
 pNames = {0: 'GAS  ',
